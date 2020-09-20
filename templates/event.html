@@ -1,7 +1,55 @@
-{% extends "formbase.html" %}
+{% extends "base.html" %}
+{% block name %}{{fname}} {{lname}}{% endblock %}
+{% block header %}{% endblock %}
+{% block dropdown %}
+    {% for event in events %}
+        <a class="dropdown-item" href="/event/{{event.id}}">{{event.cause}}</a>
+    {% endfor %}
+{% endblock %}
 {% block content %}
-    <div style="width: 60%; margin: 0 auto;">
-        <p style="text-align: left; font-size: 15px; padding-top: 20px;">Protest Cause: {{cause}}</p>
+    <div style="width: 60%; margin: 0 auto; padding-top: 20px; padding-bottom: 20px;">
+        <table>
+            <tr>
+                <th width = 150px>
+                    Protest Organizer
+                </th>
+                <th>
+                    {{user}}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Protest Cause
+                </th>
+                <th>
+                    {{cause}}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    {{date}}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Description
+                </th>
+                <th>
+                    {{description}}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Location
+                </th>
+                <th>
+                    {{addr}}
+                </th>
+            </tr>
+        </table>
     </div>
     <div id="googleMap" style="margin: 0 auto; width:60%; height:400px;"></div>
     <script>

@@ -22,6 +22,15 @@ a.nav-link:hover {
     color: rgb(226, 189, 26) !important;
 }
 
+a.eventlist {
+    text-decoration: none !important;
+    color: white;
+}
+
+a.eventlist:hover {
+    color: rgb(226, 189, 26);
+}
+
 .mybutton {
     text-decoration: none !important;
     padding: 5px;
@@ -36,4 +45,49 @@ a.nav-link:hover {
 .mybutton:hover {
     color: rgb(26, 26, 26);
     background-color: rgb(226, 189, 26);
+}
+
+table {
+    color: white;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid rgb(226, 189, 26);
+    text-align: left;
+    padding: 8px;
+}
+
+@keyframes fadeinyellow {
+    from {
+        color: rgb(18, 18, 18);
+    }
+    to {
+        color: rgb(226, 189, 26);
+    }
+}
+
+.malcolm {
+    color:rgb(18, 18, 18);
+    animation-name: fadeinyellow;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeinwhite {
+    from {
+        color: rgb(18, 18, 18);
+    }
+    to {
+        color: white;
+    }
+}
+
+.theproject {
+    color:rgb(18, 18, 18);
+    animation-name: fadeinwhite;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }

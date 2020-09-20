@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% block name %}{{fname}} {{lname}}{% endblock %}
 {% block header %}{% endblock %}
+{% block dropdown %}
+    {% for event in events %}
+        <a class="dropdown-item" href="/event/{{event.id}}">{{event.cause}}</a>
+    {% endfor %}
+{% endblock %}
 {% block content %}
 <div style="width: 30%; margin: 0 auto;">
     <p style="font-size: 25px; padding-top: 25px;">Create new protest</p>
     <form action="#" method="post">
         <label for="cs" style="font-size: 16px;">Protest Cause:</label><br>
-        <input type="text" id="cs" name="cs" style="font-size: 16px; width: 300px;" required><br><br>
+        <input type="text"  list="causes" id="cs" name="cs" style="font-size: 16px; width: 300px;" required><br><br>
+            <datalist id = causes>
+                <option>BLM</option>
+                <option>Free Hong Kong</option>
+                <option>Uyghur Muslim Protest</option>
+                <option>Rohingya Refugee Crisis</option>
+                <option>LGBT rights</option>
+                <option>Climate Change</option>
+                <option>Women's Rights</option>
+                <option>Animal Rights</option>
+            </datalist>
         <label for="ds" style="font-size: 16px;">Description:</label><br>
         <textarea id="ds" name="ds" rows="15" cols="100" style="font-size: 16px; white-space: nowrap" required></textarea><br><br>
         <label for="ad" style="font-size: 16px;">Location:</label><br>

@@ -1,6 +1,22 @@
 {% extends "base.html" %}
+{% block dropdown %}
+    {% for event in events %}
+        <a class="dropdown-item" href="/event/{{event.id}}">{{event.cause}}</a>
+    {% endfor %}
+{% endblock %}
 {% block name %}{{fname}} {{lname}}{% endblock %}
-{% block header %}Organized protesting{% endblock %}
+{% block header %}{% endblock %}
 {% block content %}
-<p style="padding-left: 20px;">Email = {{email}}</p>
+<div style="width: 70%; margin: 0 auto;">
+    <p style="font-size: 25px; padding-top: 25px;">Protests near me</p>
+    <table>
+        {% for event in nearby_events %}
+            <tr>
+                <th style="font: sans-serif; font-style: normal; font-size : 17px;">
+                    <a class="eventlist" href="/event/{{event.id}}">{{event.cause}}  -  {{event.addr}}  -  {{event.date.strftime("%d %B, %Y")}}</a>
+                </th>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

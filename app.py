@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
 from datetime import datetime
+import geocoder
 
 app = Flask(__name__)
 app.secret_key = "e0l2n5v4"
@@ -49,13 +51,24 @@ class Event(db.Model):
 def main():
     return render_template("main.html")
 
-@app.route("/home/")
+@app.route("/explore/")
 def home():
     if "email" in session:
         fname = session["fname"]
         lname = session["lname"]
         email = session["email"]
-        return render_template("home.html", fname = fname, lname = lname, email = email)
+        foundUser = User.query.filter_by(email = email).first()
+        allEvents = Event.query.all()
+
+        latlng = geocoder.ip("me").latlng
+        coor = (latlng[0], latlng[1])
+        nearby = []
+        for e in allEvents:
+            coor_e = (e.addr_lat, e.addr_long)
+            if float(geodesic(coor, coor_e).kilometers) < 20:
+                nearby.append(e)
+
+        return render_template("home.html", fname = fname, lname = lname, events = foundUser.events, nearby_events = nearby)
     else:
         return redirect(url_for("login"))
 
@@ -118,13 +131,13 @@ def newevent():
     if request.method == "POST":
         cause = request.form["cs"]
         description = request.form["ds"]
-        loc = geolocator.geocode(str(request.form["ad"]))
+        addr = request.form["ad"]
+        loc = geolocator.geocode(str(addr))
 
         if loc == None:
             flash("Address not found!", "error")
             return redirect(url_for("signup"))
         
-        addr = loc.address
         addr_lat = loc.latitude
         addr_long = loc.longitude
         date = datetime.strptime(str(request.form["dt"]), "%Y-%m-%d")
@@ -136,19 +149,30 @@ def newevent():
         foundUser.events.append(newevent)
         db.session.commit()
 
-        return redirect(url_for("home"))
+        return redirect(url_for("event", event_id = newevent.id))
     else:
-        return render_template("newevent.html")
+        email = session["email"]
+        foundUser = User.query.filter_by(email = email).first()
+        return render_template("newevent.html", fname = foundUser.fname, lname = foundUser.lname, events = foundUser.events)
 
 @app.route("/event/<event_id>")
 def event(event_id):
     foundEvent = Event.query.filter_by(id = event_id).first()
-    return render_template("event.html", cause = foundEvent.cause, description = foundEvent.description, addr = foundEvent.addr, addr_lat = foundEvent.addr_lat, addr_long = foundEvent.addr_long, date = foundEvent.date.strftime("%d %B, %Y"))
+    foundUser = User.query.filter_by(id = foundEvent.userid).first()
+    fname = ""
+    lname = ""
+    events = []
+    if "email" in session:
+        currUser = User.query.filter_by(email = session["email"]).first()
+        fname = currUser.fname
+        lname = currUser.lname
+        events = currUser.events
+    return render_template("event.html", fname = fname, lname = lname, events = events, user = str(foundUser.fname + " " + foundUser.lname), cause = foundEvent.cause, description = foundEvent.description, addr = foundEvent.addr, addr_lat = foundEvent.addr_lat, addr_long = foundEvent.addr_long, date = foundEvent.date.strftime("%d %B, %Y"))
 
 @app.route("/debug/")
 def debug():
     foundUser = User.query.filter_by(email = session["email"]).first()
-    print(foundUser.events[0].cause)
+    print(len(foundUser.events))
     return f"<h1>debugging page</h1>"
 
 if __name__ == "__main__":
