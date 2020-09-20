@@ -1,0 +1,29 @@
+{% extends "formbase.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p style="text-align: center; color: red;">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div style="width: 20%; margin: 0 auto;">
+        <p style="font-size: 25px; padding-top: 25px;">
+            <span>Sign Up for&nbsp;</span>
+            <span style="font-family: Georgia;">The Malcolm Project</span>
+        </p>
+        <form action="#" method="post">
+            <label for="fn" style="font-size: 16px;">First Name:</label><br>
+            <input type="text" id="fn" name="fn" style="font-size: 16px; width: 300px;" required><br><br>
+            <label for="ln" style="font-size: 16px;">Last Name:</label><br>
+            <input type="text" id="ln" name="ln" style="font-size: 16px; width: 300px;" required><br><br>
+            <label for="em" style="font-size: 16px;">Email:</label><br>
+            <input type="email" id="em" name="em" style="font-size: 16px; width: 300px;" required><br><br>
+            <label for="pw" style="font-size: 16px;">Password:</label><br>
+            <input type="password" id="pw" name="pw" style="font-size: 16px; width: 300px;" required><br><br>
+            <label for="rpw" style="font-size: 16px;">Retype Password:</label><br>
+            <input type="password" id="rpw" name="rpw" style="font-size: 16px; width: 300px;" required><br><br>
+            <p style="padding-top: 20px; font-size: 16px;"><input class="mybutton" type="submit" value="Sign Up"/></p>
+        </form>
+    </div>
+{% endblock %}

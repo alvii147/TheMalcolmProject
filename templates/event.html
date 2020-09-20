@@ -1,0 +1,17 @@
+{% extends "formbase.html" %}
+{% block content %}
+    <div style="width: 60%; margin: 0 auto;">
+        <p style="text-align: left; font-size: 15px; padding-top: 20px;">Protest Cause: {{cause}}</p>
+    </div>
+    <div id="googleMap" style="margin: 0 auto; width:60%; height:400px;"></div>
+    <script>
+        function myMap() {
+            var mapProp= {
+                center:new google.maps.LatLng({{addr_lat}}, {{addr_long}}),
+                zoom: 15,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzniQ0cnpQWjPE6J_lkF1wVbXePAvD_SI&callback=myMap"></script>
+{% endblock %}

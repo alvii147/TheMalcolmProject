@@ -1,0 +1,39 @@
+body {
+    background-color: rgb(18, 18, 18);
+}
+
+h1 {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+label {
+    color: white;
+}
+
+a.nav-link {
+    color: white !important;
+}
+
+a.nav-link:hover {
+    color: rgb(226, 189, 26) !important;
+}
+
+.mybutton {
+    text-decoration: none !important;
+    padding: 5px;
+    color: rgb(226, 189, 26);
+    background-color: rgb(26, 26, 26);
+    border-style: solid;
+    border-color: rgb(226, 189, 26);
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.mybutton:hover {
+    color: rgb(26, 26, 26);
+    background-color: rgb(226, 189, 26);
+}
